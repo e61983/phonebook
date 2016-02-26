@@ -24,9 +24,11 @@ run: $(EXEC)
 	watch -d -t "./phonebook_orig && echo 3 | sudo tee /proc/sys/vm/drop_caches"
 
 cache-test: $(EXEC)
+	echo 1 | sudo tee /proc/sys/vm/drop_caches
 	perf stat --repeat 100 \
 		-e cache-misses,cache-references,instructions,cycles \
 		./phonebook_orig
+	echo 1 | sudo tee /proc/sys/vm/drop_caches
 	perf stat --repeat 100 \
 		-e cache-misses,cache-references,instructions,cycles \
 		./phonebook_opt
