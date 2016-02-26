@@ -1,6 +1,7 @@
 #ifndef _PHONEBOOK_H
 #define _PHONEBOOK_H
-
+#include <sys/types.h>
+#include <limits.h>
 #define MAX_LAST_NAME_SIZE 16
 
 /* TODO: After modifying the original version, uncomment the following
@@ -23,8 +24,21 @@ typedef struct entry {
     struct entry *pNext;
 } entry, *p_entry;
 
+typedef uint hashIndex;
+typedef struct hash_table{
+    uint size;
+    p_entry *list;
+}hash_table, *p_hash_table;
 
-entry *findName(char lastname[], entry *pHead);
-entry *append(char lastName[], entry *e);
+#if defined(OPT)
+    entry *findName(char lastname[], entry *pHead, p_hash_table table);
+    entry *append(char lastName[], entry *e, p_hash_table table);
+#else
+    entry *findName(char lastname[], entry *pHead);
+    entry *append(char lastName[], entry *e);
+#endif
+
+p_hash_table create_hash_table(uint size);
+hashIndex hash(char *key, p_hash_table table);
 
 #endif
