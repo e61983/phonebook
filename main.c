@@ -43,6 +43,12 @@ int main(int argc, char *argv[])
     e = pHead;
     e->pNext = NULL;
 
+#if defined(OPT)
+    /* build hash table */
+    p_hash_table table = create_hash_table(2<<15);
+#endif
+
+
 #if defined(__GNUC__)
     __builtin___clear_cache((char *) pHead, (char *) pHead + sizeof(entry));
 #endif
@@ -52,7 +58,11 @@ int main(int argc, char *argv[])
             i++;
         line[i - 1] = '\0';
         i = 0;
+#if defined(OPT)
+        e = append(line, e, table);
+#else
         e = append(line, e);
+#endif
     }
     clock_gettime(CLOCK_REALTIME, &end);
     cpu_time1 = diff_in_second(start, end);
@@ -63,19 +73,36 @@ int main(int argc, char *argv[])
     e = pHead;
 
     /* the givn last name to find */
-    char input[MAX_LAST_NAME_SIZE] = "zyxel";
-    e = pHead;
+#define INPUT_SIZE 8
+        char input[INPUT_SIZE][MAX_LAST_NAME_SIZE] = {"uninvolved","zyxel","whiteshank", 
+        "odontomous", "pungoteague", "reweighted", "xiphisternal", "yakattalo"};
 
-    assert(findName(input, e) &&
+#if defined(OPT)
+        assert(findName(input[1], e, table) &&
+          "Did you implement findName() in " IMPL "?");
+        assert(0 == strcmp(findName(input[1], e, table)->lastName, input[1]));
+#else
+    for (int i = 0; i < INPUT_SIZE; i++) {
+        assert(findName(input[1], e) &&
            "Did you implement findName() in " IMPL "?");
-    assert(0 == strcmp(findName(input, e)->lastName, "zyxel"));
+        assert(0 == strcmp(findName(input[1], e)->lastName, input[1]));
+    }
+#endif
 
 #if defined(__GNUC__)
     __builtin___clear_cache((char *) pHead, (char *) pHead + sizeof(entry));
 #endif
     /* compute the execution time */
     clock_gettime(CLOCK_REALTIME, &start);
-    findName(input, e);
+#if defined(OPT)
+    for (int i = 0; i < INPUT_SIZE; i++) {
+        findName(input[i], e, table);
+    }
+#else
+    for (int i = 0; i < INPUT_SIZE; i++) {
+        findName(input[i], e);
+    }
+#endif
     clock_gettime(CLOCK_REALTIME, &end);
     cpu_time2 = diff_in_second(start, end);
 
@@ -93,6 +120,11 @@ int main(int argc, char *argv[])
 
     if (pHead->pNext) free(pHead->pNext);
     free(pHead);
+
+#if defined(OPT)
+    free(table->list);
+    free(table);
+#endif
 
     return 0;
 }
