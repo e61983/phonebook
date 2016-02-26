@@ -19,6 +19,13 @@ phonebook_opt: $(SRCS_common) phonebook_opt.c phonebook_opt.h
 		-DIMPL="\"$@.h\"" -o $@ \
 		$(SRCS_common) $@.c
 
+phonebook_opt_debug: $(SRCS_common) phonebook_opt.c phonebook_opt.h
+	$(CC) $(CFLAGS_common) -ggdb3 $(CFLAGS_opt) \
+		-D OPT \
+		-DIMPL="\"phonebook_opt.h\"" -o phonebook_opt \
+		$(SRCS_common) phonebook_opt.c
+		size phonebook_opt
+		gdb -q -x gdb_script phonebook_opt
 run: $(EXEC)
 	echo 3 | sudo tee /proc/sys/vm/drop_caches
 	watch -d -t "./phonebook_orig && echo 3 | sudo tee /proc/sys/vm/drop_caches"

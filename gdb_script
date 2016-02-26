@@ -1,0 +1,14 @@
+b 99
+command 1
+    p $info = findName(input[i], e, table)
+    printf "input[%d] = %s, find->lastName = %s\n",i,input[i],$info->lastName
+end
+r
+c
+c
+c
+c
+c
+c
+c
+c
