@@ -1,15 +1,8 @@
-b 99
+b 100 
 command 1
     printf "input[%d] = %s\n", i, input[i]
     p $info = findName(input[i], table)
     printf "find->lastName = %s\n",$info->lastName
+    c
 end
 r
-c
-c
-c
-c
-c
-c
-c
-c
