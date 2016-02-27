@@ -8,9 +8,8 @@ entry *findName(char lastname[], p_hash_table table)
 {
     if (lastname == NULL) return NULL;
     hashIndex index = hash(lastname,table);
-    for(p_entry e = table->list[index]; e !=NULL;e=e->pNext){
-        if (strcasecmp(lastname, e->lastName) == 0)
-        {
+    for(p_entry e = table->list[index]; e !=NULL; e=e->pNext) {
+        if (strcasecmp(lastname, e->lastName) == 0) {
             return e;
         }
     }
@@ -29,7 +28,8 @@ int append(char lastName[], p_hash_table table)
     return 0;
 }
 
-p_hash_table create_hash_table(uint size){
+p_hash_table create_hash_table(uint size)
+{
     if(size <1) return NULL;
 
     p_hash_table table=NULL;
@@ -40,16 +40,17 @@ p_hash_table create_hash_table(uint size){
 
     table->size=size;
 
-    for(uint i =0; i < table->size; i++){
+    for(uint i =0; i < table->size; i++) {
         table->list[i]=NULL;
     }
 
     return table;
 }
 
-hashIndex hash(char *key, p_hash_table table){
+hashIndex hash(char *key, p_hash_table table)
+{
     hashIndex index = 0;
-    for(;*key!='\0';key++){
+    for(; *key!='\0'; key++) {
         index += (index <<7)+*key;
     }
     return index % table->size;

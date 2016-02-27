@@ -74,17 +74,18 @@ int main(int argc, char *argv[])
 
     /* the givn last name to find */
 #define INPUT_SIZE 8
-        char input[INPUT_SIZE][MAX_LAST_NAME_SIZE] = {"uninvolved","zyxel","whiteshank", 
-        "odontomous", "pungoteague", "reweighted", "xiphisternal", "yakattalo"};
+    char input[INPUT_SIZE][MAX_LAST_NAME_SIZE] = {"uninvolved","zyxel","whiteshank",
+                                                  "odontomous", "pungoteague", "reweighted", "xiphisternal", "yakattalo"
+                                                 };
 
 #if defined(OPT)
-        assert(findName(input[1], table) &&
-          "Did you implement findName() in " IMPL "?");
-        assert(0 == strcmp(findName(input[1], table)->lastName, input[1]));
+    assert(findName(input[1], table) &&
+           "Did you implement findName() in " IMPL "?");
+    assert(0 == strcmp(findName(input[1], table)->lastName, input[1]));
 #else
     for (int i = 0; i < INPUT_SIZE; i++) {
         assert(findName(input[1], e) &&
-           "Did you implement findName() in " IMPL "?");
+               "Did you implement findName() in " IMPL "?");
         assert(0 == strcmp(findName(input[1], e)->lastName, input[1]));
     }
 #endif

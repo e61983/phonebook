@@ -6,7 +6,7 @@
 
 /* TODO: After modifying the original version, uncomment the following
  * line to set OPT properly */
-typedef struct detail{
+typedef struct detail {
     char firstName[16];
     char email[16];
     char phone[10];
@@ -25,17 +25,17 @@ typedef struct entry {
 } entry, *p_entry;
 
 typedef uint hashIndex;
-typedef struct hash_table{
+typedef struct hash_table {
     uint size;
     p_entry *list;
-}hash_table, *p_hash_table;
+} hash_table, *p_hash_table;
 
 #if defined(OPT)
-    entry *findName(char lastname[], p_hash_table table);
-    int append(char lastName[], p_hash_table table);
+entry *findName(char lastname[], p_hash_table table);
+int append(char lastName[], p_hash_table table);
 #else
-    entry *findName(char lastname[], entry *pHead);
-    entry *append(char lastName[], entry *e);
+entry *findName(char lastname[], entry *pHead);
+entry *append(char lastName[], entry *e);
 #endif
 
 p_hash_table create_hash_table(uint size);
