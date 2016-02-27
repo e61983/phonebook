@@ -4,27 +4,29 @@
 #include "phonebook_opt.h"
 
 /* FILL YOUR OWN IMPLEMENTATION HERE! */
-entry *findName(char lastname[], entry *pHead, p_hash_table table)
+entry *findName(char lastname[], p_hash_table table)
 {
     if (lastname == NULL) return NULL;
-    if (strcasecmp(lastname, table->list[hash(lastname,table)]->lastName) == 0)
-    {
-        return table->list[hash(lastname,table)];
+    hashIndex index = hash(lastname,table);
+    for(p_entry e = table->list[index]; e !=NULL;e=e->pNext){
+        if (strcasecmp(lastname, e->lastName) == 0)
+        {
+            return e;
+        }
     }
     return NULL;
 }
 
-entry *append(char lastName[], entry *e, p_hash_table table)
+int append(char lastName[], p_hash_table table)
 {
     /* allocate memory for the new entry and put lastName */
-    e->pNext = (entry *) malloc(sizeof(entry));
-    e = e->pNext;
+    hashIndex index = hash(lastName,table);
+    p_entry e;
+    if ((e = malloc(sizeof(entry)))==NULL)return 1;
+    e->pNext=table->list[index];
+    table->list[index]=e;
     memcpy(e->lastName, lastName,strlen(lastName)+1);
-    e->pNext = NULL;
-    hashIndex index = hash(e->lastName,table);
-    table->list[index] = e;
- 
-    return e;
+    return 0;
 }
 
 p_hash_table create_hash_table(uint size){

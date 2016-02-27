@@ -31,8 +31,8 @@ typedef struct hash_table{
 }hash_table, *p_hash_table;
 
 #if defined(OPT)
-    entry *findName(char lastname[], entry *pHead, p_hash_table table);
-    entry *append(char lastName[], entry *e, p_hash_table table);
+    entry *findName(char lastname[], p_hash_table table);
+    int append(char lastName[], p_hash_table table);
 #else
     entry *findName(char lastname[], entry *pHead);
     entry *append(char lastName[], entry *e);

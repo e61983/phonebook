@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
         line[i - 1] = '\0';
         i = 0;
 #if defined(OPT)
-        e = append(line, e, table);
+        append(line, table);
 #else
         e = append(line, e);
 #endif
@@ -78,9 +78,9 @@ int main(int argc, char *argv[])
         "odontomous", "pungoteague", "reweighted", "xiphisternal", "yakattalo"};
 
 #if defined(OPT)
-        assert(findName(input[1], e, table) &&
+        assert(findName(input[1], table) &&
           "Did you implement findName() in " IMPL "?");
-        assert(0 == strcmp(findName(input[1], e, table)->lastName, input[1]));
+        assert(0 == strcmp(findName(input[1], table)->lastName, input[1]));
 #else
     for (int i = 0; i < INPUT_SIZE; i++) {
         assert(findName(input[1], e) &&
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     clock_gettime(CLOCK_REALTIME, &start);
 #if defined(OPT)
     for (int i = 0; i < INPUT_SIZE; i++) {
-        findName(input[i], e, table);
+        findName(input[i], table);
     }
 #else
     for (int i = 0; i < INPUT_SIZE; i++) {

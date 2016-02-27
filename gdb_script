@@ -1,7 +1,8 @@
 b 99
 command 1
-    p $info = findName(input[i], e, table)
-    printf "input[%d] = %s, find->lastName = %s\n",i,input[i],$info->lastName
+    printf "input[%d] = %s\n", i, input[i]
+    p $info = findName(input[i], table)
+    printf "find->lastName = %s\n",$info->lastName
 end
 r
 c
