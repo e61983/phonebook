@@ -40,6 +40,17 @@ cache-test: $(EXEC)
 		-e cache-misses,cache-references,instructions,cycles \
 		./phonebook_opt
 
+copy-test: copy_test.c
+	$(CC) $(CFLAGS_common) $^ -o $@
+
+copy-test_debug: copy_test.c
+	$(CC) $(CFLAGS_common) -ggdb3 copy_test.c -o copy-test
+	size copy-test
+	gdb -q copy-test
+
+copy-test.txt: copy-test
+	./copy-test
+
 output.txt: cache-test calculate
 	./calculate
 
@@ -53,4 +64,5 @@ calculate: calculate.c
 .PHONY: clean
 clean:
 	$(RM) $(EXEC) *.o perf.* \
-	      	calculate orig.txt opt.txt output.txt runtime.png
+		calculate orig.txt opt.txt output.txt runtime.png \
+		copy-test copy-test.txt 
