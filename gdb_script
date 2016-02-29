@@ -1,12 +1,17 @@
 b 100 
-command 1
-    printf "input[%d] = %s\n", i, input[i]
-    set $info = findName(input[i], table)
-    if(!strcmp($info->lastName,input[i]))
-        printf "find->lastName = %s\n",$info->lastName
+
+define check
+    if (!strcmp($arg0,$arg1))
+        printf "find-> %s\n", $arg0
     else
         printf "-><- No found. -><- \n"
     end
+end
+
+command 1
+    printf "input[%d] = %s\n", i, input[i]
+    set $info = findName(input[i], table)
+    check input[i] $info->lastName
     c
 end
 r
